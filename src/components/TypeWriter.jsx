@@ -67,7 +67,7 @@ const TypeWriter = React.memo(({ text, delay = 50, onComplete, showCursor = true
         {displayText}
       </span>
       {showCursor && (
-        <span className="absolute -right-1 -ml-1 animate-blink text-white">|</span>
+        <span className="absolute -right-1 -ml-1 animate-blink text-white/80">I</span>
       )}
     </span>
   );

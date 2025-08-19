@@ -1,12 +1,61 @@
-# React + Vite
+# Cycls Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive landing page built with React, Vite, Shadcn/UI and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before running this project, make sure you have the following installed:
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (version 16 or higher) installed on your system.
+- [npm](https://www.npmjs.com/) (comes with Node.js) installed.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/samiur-rehman/cycls.git
+   cd cycls
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+## Running the Project
+
+### Development Mode
+
+To start the development server:
+
+```bash
+npm run dev
+```
+
+This will start the Vite development server, typically on `http://localhost:5173`. The page will automatically reload when you make changes to the source files.
+
+### Build for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+The built files will be generated in the `dist` directory.
+
+### Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+### Linting
+
+To run the linter and check for code quality issues:
+
+```bash
+npm run lint
+```

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
-const ParticleEffect = React.memo(() => {
-  const [particles, setParticles] = useState([]);
+const ParticleEffect = memo(() => {
   const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const ctx = canvas.getContext('2d');
     let animationId;
 
@@ -17,25 +19,24 @@ const ParticleEffect = React.memo(() => {
     const createParticle = () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      size: Math.random() * 2 + 1,
-      opacity: Math.random() * 0.5 + 0.2,
-      color: `hsl(${200 + Math.random() * 60}, 70%, 60%)`
+      vx: (Math.random() - 0.5) * 1.0,
+      vy: (Math.random() - 0.5) * 1.0,
+      size: Math.random() * 3 + 2,
+      opacity: Math.random() * 0.6 + 0.4,
+      color: `hsl(${200 + Math.random() * 60}, 80%, 70%)`
     });
 
     const initParticles = () => {
-      const newParticles = [];
-      for (let i = 0; i < 50; i++) {
-        newParticles.push(createParticle());
+      particlesRef.current = [];
+      for (let i = 0; i < 80; i++) {
+        particlesRef.current.push(createParticle());
       }
-      setParticles(newParticles);
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      particles.forEach((particle, index) => {
+      particlesRef.current.forEach((particle, index) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
         
@@ -49,18 +50,18 @@ const ParticleEffect = React.memo(() => {
         ctx.fill();
         
         // Draw connections between nearby particles
-        particles.forEach((otherParticle, otherIndex) => {
+        particlesRef.current.forEach((otherParticle, otherIndex) => {
           if (index !== otherIndex) {
             const dx = particle.x - otherParticle.x;
             const dy = particle.y - otherParticle.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 100) {
+            if (distance < 150) {
               ctx.beginPath();
               ctx.moveTo(particle.x, particle.y);
               ctx.lineTo(otherParticle.x, otherParticle.y);
-              ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 100)})`;
-              ctx.lineWidth = 0.5;
+              ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 * (1 - distance / 150)})`;
+              ctx.lineWidth = 1;
               ctx.stroke();
             }
           }
@@ -70,23 +71,28 @@ const ParticleEffect = React.memo(() => {
       animationId = requestAnimationFrame(animate);
     };
 
+    const handleResize = () => {
+      resizeCanvas();
+      initParticles();
+    };
+
     resizeCanvas();
     initParticles();
     animate();
 
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
-  }, [particles]);
+  }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none opacity-30"
-      style={{ zIndex: 1 }}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 1, opacity: 0.4 }}
     />
   );
 });

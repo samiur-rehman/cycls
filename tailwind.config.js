@@ -1,14 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx}",
   ],
-  theme: {
-    extend: {
-      animation: {
-        'spin-slow': 'spin 20s linear infinite',
-      }
-    },
-  },
-  plugins: [],
+  plugins: [import("tailwindcss-animate").then(mod => mod.default ? mod.default : mod)],
 }
